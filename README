@@ -1,0 +1,3 @@
+Stupid C + ncurses implementation of snake
+ 
+$ make snake && ./snake
