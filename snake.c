@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -69,8 +70,8 @@ void grid_clear( struct grid *grid )
     memset( grid->g, EMPTY, grid->width * grid->height );
 
     // Add a wall around the entire border
-    for ( y = 0; y < grid->height; ++y ) {
-        for ( x = 0; x < grid->width; ++x ) {
+    for ( y = 0; y < grid->height; y++ ) {
+        for ( x = 0; x < grid->width; x++ ) {
             if (
                 x == 0 || x == grid->width  - 1 ||
                 y == 0 || y == grid->height - 1
@@ -81,7 +82,7 @@ void grid_clear( struct grid *grid )
     }
 
     // Add an interesting wall in the middle of the grid
-    for ( y = grid->height / 4; y < grid->height - grid->height / 4; ++y )
+    for ( y = grid->height / 4; y < grid->height - grid->height / 4; y++ )
         grid_set( grid, 24, y, WALL );
 }
 
@@ -94,7 +95,8 @@ void grid_clear_cell( struct grid *grid, int x, int y )
 
 void init_grid( struct grid *grid, int width, int height )
 {
-    grid->g = malloc( sizeof( int ) * width * height );
+    grid->g = malloc( sizeof width * width * height );
+    assert(grid->g);
 
     grid->width  = width;
     grid->height = height;
@@ -123,7 +125,7 @@ void push_point( struct snake *snake, struct point p )
 {
     struct snake_point *new;
 
-    new       = (struct snake_point *) malloc( sizeof( struct snake_point ) );
+    new       = (struct snake_point *) malloc( sizeof *new );
     new->p    = p;
     new->next = NULL;
 
@@ -175,7 +177,7 @@ void init_snake( struct snake *snake, struct point head, struct point tail, stru
     snake->apples_eaten = 0;
 
     // Add the snake to the grid
-    for ( i = tail.x; i <= head.x; ++i ) {
+    for ( i = tail.x; i <= head.x; i++ ) {
         push_point( snake, (struct point) { i, head.y } );
     }
 }
@@ -256,8 +258,8 @@ void dump_grid( const struct grid *grid )
     int h = grid->height;
     int x, y;
 
-    for ( y = 0; y < h; ++y ) {
-        for ( x = 0; x < w; ++x ) {
+    for ( y = 0; y < h; y++ ) {
+        for ( x = 0; x < w; x++ ) {
             char c;
             int val = grid_get( grid, x, y );
             switch ( grid_get( grid, x, y ) ) {
@@ -289,7 +291,7 @@ void show_stats( const struct snake *snake )
 }
 
 
-int main()
+int main(void)
 {
     int done = 0;
 
