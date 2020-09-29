@@ -107,7 +107,7 @@ void init_grid( struct grid *grid, int width, int height )
 
 // Randomly places the apple in an empty cell in the grid
 // and returns the coordinates
-struct point place_apple( struct grid *grid )
+void place_apple( struct grid *grid )
 {
     int x, y;
 
