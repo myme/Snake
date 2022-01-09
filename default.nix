@@ -1,8 +1,4 @@
-{
-  pkgs ? import <nixpkgs> {},
-  stdenv ? pkgs.stdenv,
-  ncurses ? pkgs.ncurses,
-}:
+{ stdenv, ncurses, }:
 
 stdenv.mkDerivation {
   name = "csnake";
